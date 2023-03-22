@@ -8,10 +8,6 @@ const int stepsPerRevolution = 2038;
 Stepper myStepper = Stepper(stepsPerRevolution, 11, 9, 10, 8);
 
 void setup() {
-  Serial.begin(9600);
-
-  // set the speed at 60 rpm:
-  myStepper.setSpeed(60);
   // initialize the serial port:
   Serial.begin(9600);
 }
@@ -20,10 +16,14 @@ void loop() {
   readSerialPort();
 
   if(msg!= "") {
-    myStepper.step(stepsPerRevolution);
-    delay(500);
+    myStepper.setSpeed(5);
+	  myStepper.step(stepsPerRevolution);
+	  delay(1000);
+	
+    // Rotate CCW quickly at 10 RPM
+    myStepper.setSpeed(10);
     myStepper.step(-stepsPerRevolution);
-    delay(500);
+    delay(1000);
     sendData();
   }
   delay(500);
