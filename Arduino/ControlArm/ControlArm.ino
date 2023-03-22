@@ -3,27 +3,30 @@
 String nom = "Arduino";
 string msg;
 
-const int stepsPerRevolution = 2038;
+const int stepsPerRevolution = 200;
 
-Stepper myStepper = Stepper(stepsPerRevolution, 11, 9, 10, 8);
+Stepper myStepper = Stepper(stepsPerRevolution, 11, 10, 9, 8);
 
 void setup() {
   // initialize the serial port:
   Serial.begin(9600);
+
+  myStepper.setSpeed(60);
 }
 
 void loop() {
   readSerialPort();
 
   if(msg!= "") {
-    myStepper.setSpeed(5);
-	  myStepper.step(stepsPerRevolution);
-	  delay(1000);
-	
-    // Rotate CCW quickly at 10 RPM
-    myStepper.setSpeed(10);
+      // step one revolution  in one direction:
+    Serial.println("clockwise");
+    myStepper.step(stepsPerRevolution);
+    delay(500);
+
+    // step one revolution in the other direction:
+    Serial.println("counterclockwise");
     myStepper.step(-stepsPerRevolution);
-    delay(1000);
+    delay(500);
     sendData();
   }
   delay(500);
