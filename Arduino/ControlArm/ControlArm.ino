@@ -1,7 +1,16 @@
+#include <Stepper.h>
+
 String nom = "Arduino";
 string msg;
 
+const int stepsPerRevolution = 2038;
+
 void setup() {
+  Serial.begin(9600);
+
+  // set the speed at 60 rpm:
+  myStepper.setSpeed(60);
+  // initialize the serial port:
   Serial.begin(9600);
 }
 
@@ -9,6 +18,10 @@ void loop() {
   readSerialPort();
 
   if(msg!= "") {
+    myStepper.step(stepsPerRevolution);
+    delay(500);
+    myStepper.step(-stepsPerRevolution);
+    delay(500);
     sendData();
   }
   delay(500);
