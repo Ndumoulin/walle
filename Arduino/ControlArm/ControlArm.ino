@@ -5,6 +5,8 @@ string msg;
 
 const int stepsPerRevolution = 2038;
 
+Stepper myStepper = Stepper(stepsPerRevolution, 11, 9, 10, 8);
+
 void setup() {
   Serial.begin(9600);
 
