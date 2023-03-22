@@ -1,32 +1,21 @@
-#include <Stepper.h>
+#include <Servo.h>
 
 String nom = "Arduino";
-string msg;
+String msg;
 
-const int stepsPerRevolution = 200;
-
-Stepper myStepper = Stepper(stepsPerRevolution, 8, 10, 9, 11);
+Servo servo1;
 
 void setup() {
-  // initialize the serial port:
   Serial.begin(9600);
 
-  myStepper.setSpeed(60);
+  servo1.attach(6);
 }
 
 void loop() {
   readSerialPort();
 
-  if(msg!= "") {
-      // step one revolution  in one direction:
-    Serial.println("clockwise");
-    myStepper.step(stepsPerRevolution);
-    delay(500);
-
-    // step one revolution in the other direction:
-    Serial.println("counterclockwise");
-    myStepper.step(-stepsPerRevolution);
-    delay(500);
+  if(msg.toInt() >= 0 && msg.toInt() <= 1023) {
+    servo1.write(msg.toInt());
     sendData();
   }
   delay(500);
