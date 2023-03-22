@@ -5,7 +5,7 @@ string msg;
 
 const int stepsPerRevolution = 200;
 
-Stepper myStepper = Stepper(stepsPerRevolution, 11, 10, 9, 8);
+Stepper myStepper = Stepper(stepsPerRevolution, 8, 10, 9, 11);
 
 void setup() {
   // initialize the serial port:
