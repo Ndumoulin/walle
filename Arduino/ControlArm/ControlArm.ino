@@ -3,20 +3,31 @@
 String nom = "Arduino";
 String msg;
 
+int servoAngle = 90;
+
 Servo servo1;
 
 void setup() {
   Serial.begin(9600);
 
   servo1.attach(6);
+  servo1.write(servoAngle);
 }
 
 void loop() {
   readSerialPort();
 
-  if(msg.toInt() >= 0 && msg.toInt() <= 1023) {
-    servo1.write(msg.toInt());
+  if(msg != "") {
+
+    if (msg == "A,1" || msg == "RB"){
+      servo1.writeMicroseconds(1600);
+    }
+    else if(msg == "A,-1" || msg == "LB")
+    {
+      servo1.writeMicroseconds(1400);
+    }
     sendData();
+    
   }
   delay(500);
 }
