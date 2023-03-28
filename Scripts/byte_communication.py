@@ -1,5 +1,5 @@
 import serial
-byte_to_send = 54 # Replace this with the byte you want to send
+byte_to_send = b'\x41' # Replace this with the byte you want to send
 
 with serial.Serial("/dev/ttyUSB0", 9600, timeout=1) as arduino:
     arduino.flush()

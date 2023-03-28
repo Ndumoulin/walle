@@ -4,7 +4,8 @@ void setup() {
 
 void loop() {
   if (Serial.available() > 0) {
-    byte byte_received = Serial.read();
-    Serial.print(byte_received);
+    int incomingByte = Serial.read();
+    Serial.print("Received: ");
+    Serial.println(incomingByte, DEC);
   }
 }
