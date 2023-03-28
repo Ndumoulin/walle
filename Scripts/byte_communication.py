@@ -3,7 +3,7 @@ byte_to_send = b'\x41' # Replace this with the byte you want to send
 
 with serial.Serial("/dev/ttyUSB0", 9600, timeout=1) as arduino:
     arduino.flush()
-    arduino.write(byte_to_send)
+    arduino.write(bytes([22]))
     
     if arduino.isOpen():
                 print("{} connected!". format(arduino.port))
