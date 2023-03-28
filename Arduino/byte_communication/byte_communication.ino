@@ -6,6 +6,5 @@ void loop() {
   if (Serial.available() > 0) {
     byte byte_received = Serial.read();
     Serial.write(byte_received);
-    Serial.flush();
   }
 }

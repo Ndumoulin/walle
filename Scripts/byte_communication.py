@@ -8,6 +8,8 @@ with serial.Serial("/dev/ttyUSB0", 9600, timeout=1) as arduino:
     if arduino.isOpen():
                 print("{} connected!". format(arduino.port))
 
-    response = arduino.read()
-    print(response)
-    print(byte_to_send)
+    if arduino.in_waiting > 0:
+        byte_received = arduino.read()
+        print("Received:", byte_received)
+
+    arduino.close()
