@@ -1,4 +1,4 @@
-string nom = "Arduino";
+String nom = "Arduino";
 
 void setup() {
   Serial.begin(9600); // Make sure the baud rate matches the Raspberry Pi side
@@ -17,5 +17,5 @@ void sendData(byte msg) {
 
   Serial.print(nom);
   Serial.print("received : ");
-  Serial.print(msg);
+  Serial.print(String((char)msg));
 }
