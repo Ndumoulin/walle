@@ -7,15 +7,6 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     byte byte_received = Serial.read();
-    sendData(byte_received);
-    // Do something with the received byte here
+    Serial.write(byte_received);
   }
-}
-
-void sendData(byte msg) {
-  // write data
-
-  Serial.print(nom);
-  Serial.print("received : ");
-  Serial.write(String(msg));
 }
