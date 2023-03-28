@@ -17,5 +17,5 @@ void sendData(byte msg) {
 
   Serial.print(nom);
   Serial.print("received : ");
-  Serial.print(String((char)msg));
+  //Serial.print(String((char)msg));
 }

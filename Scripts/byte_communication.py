@@ -6,3 +6,6 @@ with serial.Serial("/dev/ttyUSB0", 9600, timeout=1) as arduino:
     
     if arduino.isOpen():
                 print("{} connected!". format(arduino.port))
+
+    response = arduino.read()
+    print(response)
