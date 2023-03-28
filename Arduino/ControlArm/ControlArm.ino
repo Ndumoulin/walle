@@ -1,7 +1,6 @@
 #include <Servo.h>
 
-String nom = "Arduino";
-String msg;
+byte msg;
 
 int servoAngle = 90;
 
@@ -17,7 +16,7 @@ void setup() {
 void loop() {
   readSerialPort();
 
-  if(msg != "") {
+  if(msg != null) {
 
     if (msg == "A,1" || msg == "RB"){
       servo1.writeMicroseconds(1600);
