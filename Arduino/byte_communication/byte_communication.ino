@@ -1,5 +1,9 @@
 #include <Servo.h>
 
+int servoAngle = 90;
+
+Servo servo1;
+
 void setup() {
   Serial.begin(9600); // Make sure the baud rate matches the Raspberry Pi side
 
