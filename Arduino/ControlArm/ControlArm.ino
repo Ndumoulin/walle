@@ -1,13 +1,14 @@
 #include <Servo.h>
 
-String msg;
+String nom = "Arduino";
+String msg = "";
 
 int servoAngle = 90;
 
 Servo servo1;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   servo1.attach(6);
   servo1.write(servoAngle);
@@ -18,17 +19,16 @@ void loop() {
 
   if(msg != "") {
 
-    if (msg == "A,1" || msg == "RB"){
+    if (msg == "R" || msg == "A"){
       servo1.writeMicroseconds(1600);
     }
-    else if(msg == "A,-1" || msg == "LB")
+    else if(msg == "L" || msg == "B")
     {
       servo1.writeMicroseconds(1400);
     }
-    sendData();
     
   }
-  delay(500);
+  delay(50);
 }
 
 void readSerialPort() {
@@ -46,7 +46,5 @@ void readSerialPort() {
 void sendData() {
   // write data
 
-  Serial.print(nom);
-  Serial.print("received : ");
   Serial.print(msg);
 }

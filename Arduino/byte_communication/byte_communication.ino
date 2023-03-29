@@ -1,21 +1,35 @@
-#include <Servo.h>
-
-int servoAngle = 90;
-
-Servo servo1;
+String nom = "Arduino";
+String msg;
 
 void setup() {
-  Serial.begin(9600); // Make sure the baud rate matches the Raspberry Pi side
-
-  servo1.attach(6);
-  servo1.write(servoAngle);
+  Serial.begin(9600);
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    servo1.writeMicroseconds(1600);
-    int incomingByte = Serial.read();
-    Serial.print("Received: ");
-    Serial.println(incomingByte, DEC);
+  readSerialPort();
+
+  if(msg != "") {
+    sendData();
   }
+  delay(50);
+}
+
+void readSerialPort() {
+  msg = "";
+
+  if (Serial.available()) {
+    delay(10);
+    while (Serial.available() > 0) {
+      msg += (char)Serial.read();
+    }
+    Serial.flush();
+  }
+}
+
+void sendData() {
+  // write data
+
+  Serial.print(nom);
+  Serial.print(" received : ");
+  Serial.print(msg);
 }

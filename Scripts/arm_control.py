@@ -24,7 +24,7 @@ class XBOXController(object):
         
 
     def listen(self):
-        with serial.Serial("/dev/ttyUSB0", 9600, timeout=1) as arduino:
+        with serial.Serial("/dev/ttyUSB0", 115200, timeout=1) as arduino:
             time.sleep(0.1)
 
             if arduino.isOpen():
@@ -46,37 +46,41 @@ class XBOXController(object):
                 for i in range(self.controller.get_numhats()):
                     self.hat_data[i] = (0, 0)
 
-            counter = 0
             while True:
                 
                 for event in pygame.event.get():
                     if event.type == pygame.JOYAXISMOTION:
                         self.axis_data[event.axis] = round(event.value,2)
-                        if self.axis_data[event.axis] > 0.3:
-                            arduino.write(b"A,1")
-                        if self.axis_data[event.axis] < -0.3:
-                            arduino.write(b"A,-1")
+                        if self.controller.get_axis(2) > 0.3:
+                            arduino.write(b"A")0
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            print(self.controller.get_axis(2))
+                        if self.controller.get_axis(2) < -0.3:
+                            arduino.write(b"B")
+                            print(self.controller.get_axis(2))
                     elif event.type == pygame.JOYBUTTONDOWN:
                         self.button_data[event.button] = True
-                        print(self.button_data[event.button])
                         if event.button == 7:
-                            arduino.write(b"RB")
+                            arduino.write(b"R")
                         if event.button == 6:
-                            arduino.write(b"LB")
+                            arduino.write(b"L")
                     elif event.type == pygame.JOYBUTTONUP:
                         self.button_data[event.button] = False
                     elif event.type == pygame.JOYHATMOTION:
                         self.hat_data[event.hat] = event.value
-                    counter = counter+1
-                    print(counter)
 
                     # Insert your code on what you would like to happen for each event here!
                     # In the current setup, I have the state simply printing out to the screen.
                     
                     #os.system('cls' if os.name == 'nt' else 'clear')
-                    print(self.button_data)
-                    print(self.axis_data)
-                    print(self.hat_data)
+                    
 
 
 def controller_main():
