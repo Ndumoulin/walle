@@ -20,11 +20,11 @@ void loop() {
   if(msg != "") {
 
     if (msg == "R" || msg == "A"){
-      servo1.writeMicroseconds(1600);
+      servo1.write(1600);
     }
     else if(msg == "L" || msg == "B")
     {
-      servo1.writeMicroseconds(1400);
+      servo1.write(1400);
     }
     
   }
