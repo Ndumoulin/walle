@@ -13,6 +13,8 @@ class XBOXController(object):
     button_data = None
     hat_data = None
     
+    commands = [0,0,0,0,0,0]
+    
 
     def init(self):
         """Initialize the joystick components"""
@@ -21,6 +23,11 @@ class XBOXController(object):
         pygame.joystick.init()
         self.controller = pygame.joystick.Joystick(0)
         self.controller.init()
+        
+    def generate_command(self):
+        line = ";".join(str(x) for x in self.commands)
+        ##print(line)
+        return line
         
 
     def listen(self):
@@ -47,41 +54,38 @@ class XBOXController(object):
                     self.hat_data[i] = (0, 0)
 
             while True:
-                
+                previous_commands = self.commands.copy()
                 for event in pygame.event.get():
                     if event.type == pygame.JOYAXISMOTION:
                         self.axis_data[event.axis] = round(event.value,2)
-                        if self.controller.get_axis(2) > 0.3:
-                            arduino.write(b"A")0
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            print(self.controller.get_axis(2))
-                        if self.controller.get_axis(2) < -0.3:
-                            arduino.write(b"B")
-                            print(self.controller.get_axis(2))
+                        
+                        if event.axis == 3 and self.axis_data[event.axis] == 0 and self.commands[3] != 0:
+                            self.commands[3] = 0
+                        if event.axis == 3 and self.axis_data[event.axis] >= 0.3 and self.commands[3] != -1:
+                            self.commands[3] = -1
+                        if event.axis == 3 and self.axis_data[event.axis] <= -0.3 and self.commands[3] != 1:
+                            self.commands[3] = 1
+                        
                     elif event.type == pygame.JOYBUTTONDOWN:
                         self.button_data[event.button] = True
                         if event.button == 7:
-                            arduino.write(b"R")
+                            self.commands[2] = 1
                         if event.button == 6:
-                            arduino.write(b"L")
+                            self.commands[2] = -1
                     elif event.type == pygame.JOYBUTTONUP:
                         self.button_data[event.button] = False
+                        if event.button == 7:
+                            self.commands[2] = 0
+                        if event.button == 6:
+                            self.commands[2] = 0
                     elif event.type == pygame.JOYHATMOTION:
                         self.hat_data[event.hat] = event.value
-
-                    # Insert your code on what you would like to happen for each event here!
-                    # In the current setup, I have the state simply printing out to the screen.
-                    
-                    #os.system('cls' if os.name == 'nt' else 'clear')
-                    
-
+                        
+                    if previous_commands != self.commands:
+                        arduino.write(str.encode(self.generate_command()))
+                        print(str.encode(self.generate_command()))
+                        
+                
 
 def controller_main():
     xbox = XBOXController()
