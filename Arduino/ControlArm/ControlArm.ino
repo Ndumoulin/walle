@@ -120,7 +120,7 @@ void loop() {
     elbowServo.write(elbowAngle);
   }
 
-  //Magnet control
+  // Contrôle de l'électro-aimant
   if (commands[5] == 1) {
     digitalWrite(Solenoid, HIGH);
   } 
@@ -131,6 +131,7 @@ void loop() {
   delay(20);
 }
 
+// Fonction permettant de séparer la string que l'on recoit et de reformer le tableau
 void splitCommands(String line) {
   char *token;
   char buffer[50];
@@ -148,7 +149,7 @@ void splitCommands(String line) {
   }
 }
 
-
+// Lecture sur le port série
 void readSerialPort() {
   msg = "";
 
